@@ -4,10 +4,17 @@ dotenv.config();
 const express = require("express");
 const connection = require("./db");
 const app = express();
-const PORT = 8080;
+const PORT = 8000;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
+app.get('/', (req, res) => {
+    connection.query(`SELECT * FROM TODO`, (err, result, fields) => {
+        if (err) console.log(err);
+        if (result) return res.status(200).json(result);
+    })
+})
 
 app.post("/", (req, res) => {
   const { todo } = req.body;
