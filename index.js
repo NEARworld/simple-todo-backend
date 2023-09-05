@@ -19,9 +19,9 @@ app.get('/', (req, res) => {
 })
 
 app.post("/", (req, res) => {
-  const { todo } = req.body;
+  const { title } = req.body;
   connection.query(
-    `INSERT INTO TODO (title) VALUES ('${todo}')`,
+    `INSERT INTO TODO (title) VALUES ('${title}')`,
     (err, result, fields) => {
       console.log("err", err);
       if (err) return res.status(400).json(err);
