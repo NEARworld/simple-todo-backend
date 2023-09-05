@@ -24,9 +24,12 @@ app.post("/", (req, res) => {
     `INSERT INTO TODO (title) VALUES ('${todo}')`,
     (err, result, fields) => {
       console.log("err", err);
-      if (err) console.log(err);
+      if (err) return res.status(400).json(err);
       if (result) {
-        return res.status(200).json(result);
+          connection.query(`SELECT * FROM TODO`, (err, result, fields) => {
+              if (err) console.log(err);
+              if (result) return res.status(200).json(result);
+          })
       }
     },
   );
